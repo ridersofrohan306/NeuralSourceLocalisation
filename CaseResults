@@ -1,0 +1,31 @@
+%for case A: success parameter(0 matching 0)
+clc
+clear
+load 10x10datapointsLS3.mat
+
+for x=1:length(P)
+    for y=1:length(M)
+        for i=1:200
+            
+            %success parameter:
+            zeromapszero(i)=(length(intersect(find(datapoint{x,y}{1,1}(i,:)==0),find(datapoint{x,y}{1,2}(i,:)==0)))/length(find(datapoint{x,y}{1,1}(i,:)==0)))*100;
+            nonzeromapsnonzero(i)=(length(intersect(find(~datapoint{x,y}{1,1}(i,:)==0),find(~datapoint{x,y}{1,2}(i,:)==0)))/length(find(~datapoint{x,y}{1,1}(i,:)==0)))*100;
+            
+            %failure parameter
+            zeromapsnonzero(i)=(length(intersect(find(datapoint{x,y}{1,1}(i,:)==0),find(~datapoint{x,y}{1,2}(i,:)==0)))/length(find(datapoint{x,y}{1,1}(i,:)==0)))*100;
+            nonzeromapszero(i)=(length(intersect(find(~datapoint{x,y}{1,1}(i,:)==0),find(datapoint{x,y}{1,2}(i,:)==0)))/length(find(~datapoint{x,y}{1,1}(i,:)==0)))*100;
+        
+        end
+        
+        caseAresult{x,y}=sum(zeromapszero)/200;
+        caseBresult{x,y}=sum(nonzeromapsnonzero)/200;
+        caseCresult{x,y}=sum(zeromapsnonzero)/200;
+        caseDresult{x,y}=sum(nonzeromapszero)/200;
+
+    end
+end
+
+A= cell2mat(caseAresult);
+B= cell2mat(caseBresult);
+C= cell2mat(caseCresult);
+D= cell2mat(caseDresult);
