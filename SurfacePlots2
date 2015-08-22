@@ -1,0 +1,30 @@
+Aclose all
+clf
+load LSresults3.mat
+P=100:100:1600;
+M=8:8:128;
+
+% CaseA: 0maps0
+
+surf(P, M, A)
+xlabel('non zeros'); ylabel('channels');
+title('0maps0')
+
+%CaseB: nonZeromapsnonZero
+
+figure;
+surf(P, M, B)
+xlabel('non zeros'); ylabel('channels');
+title('~0maps~0')
+
+%CaseC: ZeromapsnonZero
+figure;
+surf(P, M, C)
+xlabel('non zeros'); ylabel('channels');
+title('0maps~0')
+
+%CaseD: nonZeromapsZero
+figure;
+surf(P, M, D)
+xlabel('non zeros'); ylabel('channels');
+title('~0maps0')
