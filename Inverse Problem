@@ -1,0 +1,46 @@
+clc
+clear
+load ('final_aMatrix.mat')
+
+%forming the A matrix with only one dimension
+for l=1:1664;
+    aMatrixpre(:,l)=final_aMatrix{1,l}(:,1);
+end
+
+%defining the s column vector
+s_pre=zeros(1,1664);
+s=s_pre(:);
+
+
+%choosing p
+A=1:1664;
+P=5:5:50;
+
+for n=1:length(P)
+%choosing p non zero elements to put at random places in s
+B=rand(1,P(n));
+
+%assigning these nonzero elements
+for i=1:P(n)
+    s(datasample(A,1))=B(i);
+end
+
+%choosing M
+C=1:128;
+M=10:10:100;
+
+% forming the m vector
+for j=1:M(n)
+    N=datasample(C,1);
+    m_dash(j)=aMatrixpre(N,:)*s;
+    aMatrix(j,:)=aMatrixpre(N,:);
+    m=m_dash';
+end
+
+end
+%LS method
+s_hat1=aMatrix\m;
+norm(aMatrix*s_hat1-m); % if this is zero or very small, we have a solution
+
+%WMN method
+s_hat2 = pinv(aMatrix)*m;
