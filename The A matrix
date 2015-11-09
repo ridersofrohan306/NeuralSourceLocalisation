@@ -1,0 +1,19 @@
+load('headmodel_eeg.mat')
+load('mri_resliced.mat')
+load('data_clean_EEG_responselocked.mat')
+run rohaneeg_ft;
+
+
+%Finding out the indexes of grid points that contain a dipole source are active 
+index_of_active_grid_points=find(~cellfun(@isempty,grid.leadfield));
+
+
+% Constructing the A matrix of active grid points
+for j=1:length(index_of_active_grid_points)
+final_aMatrix{1,j}=[grid.leadfield{index_of_active_grid_points(j)}];
+end
+
+% Constructing the m matrix
+%run build_m_matrix
+
+
